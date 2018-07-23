@@ -40,4 +40,5 @@ public class BruteCollinearPoints {
         BruteCollinearPoints b = new BruteCollinearPoints(new Point[]{new Point(0, 0), new Point(1, 1), new Point(2, 2), new Point(3, 3)});
         System.out.println(b.numberOfSegments());
     }
+
 }
