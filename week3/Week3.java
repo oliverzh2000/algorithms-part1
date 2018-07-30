@@ -82,10 +82,41 @@ public class Week3 {
         }
     }
 
+    // partition from array[lo..hi). return the index of the pivot.
+    static int partition(int[] array, int lo, int hi) {
+        System.out.println("Partition " + lo + " " + hi);
+        System.out.println(Arrays.toString(array));
+        int pivot = array[lo];
+        int i = lo + 1;
+        int j = hi - 1;
+        while (true) {
+            while (array[i] < pivot) {
+                i++;
+                if (hi == i) break;
+            }
+            while (pivot < array[j]) {
+                j--;
+                if (j == lo) break;
+            }
+            if (i >= j) break;
+            swap(array, i, j);
+        }
+        swap(array, lo, j);
+        return j;
+    }
+
+    static void quicksort(int[] array, int lo, int hi) {
+        if ((hi - lo) <= 1) return;
+        int pivotIndex = partition(array, lo, hi);
+        quicksort(array, lo, pivotIndex - 1);
+        quicksort(array, pivotIndex + 1, hi);
+    }
+
     public static void main(String[] args) {
         int[] array = new int[]{6, 5, 3, 1, 8, 7, 2, 4};
-        insertionSort(array);
-
+//        System.out.println(partition(array, 3, 5));
+//
+        quicksort(array, 0, array.length);
         System.out.println(Arrays.toString(array));
     }
 }
