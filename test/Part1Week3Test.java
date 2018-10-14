@@ -5,7 +5,7 @@ import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class Week3Test {
+class Part1Week3Test {
     private int[] arraySmall;
 
     @BeforeEach
