@@ -28,11 +28,11 @@ public class DepthFirstSearch {
         }
     }
 
-    boolean hasPathTo(int vertex) {
+    public boolean hasPathTo(int vertex) {
         return marked[vertex];
     }
 
-    Iterable<Integer> pathTo(int vertex) {
+    public Iterable<Integer> pathTo(int vertex) {
         if (!hasPathTo(vertex)) {
             return null;
         }
