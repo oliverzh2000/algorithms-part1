@@ -31,4 +31,8 @@ public class ConnectedComponents {
             }
         }
     }
+
+    public boolean connected(int v, int w) {
+        return id[v] == id[w];
+    }
 }

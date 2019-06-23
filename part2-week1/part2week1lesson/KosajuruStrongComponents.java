@@ -32,4 +32,8 @@ public class KosajuruStrongComponents {
             }
         }
     }
+
+    public boolean stronglyConnected(int v, int w) {
+        return id[v] == id[w];
+    }
 }
