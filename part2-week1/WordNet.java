@@ -102,7 +102,7 @@ public class WordNet {
         if (!isNoun(nounA) || !isNoun(nounB)) {
             throw new IllegalArgumentException();
         }
-        // Only need one noun from the common ancestor synset, so just take the first.
+        // TODO: return all the nouns in the synset joined together.
         return synsetNouns.get(sap.ancestor(nounIds.get(nounA), nounIds.get(nounB))).iterator().next();
     }
 
