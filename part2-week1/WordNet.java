@@ -1,4 +1,7 @@
-import edu.princeton.cs.algs4.*;
+import edu.princeton.cs.algs4.Bag;
+import edu.princeton.cs.algs4.Digraph;
+import edu.princeton.cs.algs4.DirectedCycle;
+import edu.princeton.cs.algs4.In;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -41,7 +44,8 @@ public class WordNet {
 
         this.hypernyms = new Digraph(N);
         In hypernymsIn = new In(hypernyms);
-        for (int i = 0; i < N; i++) {
+        int i = 0;
+        while (hypernymsIn.hasNextLine()) {
             String line = hypernymsIn.readLine();
             for (String idStr : line.split(",")) {
                 if (i != Integer.parseInt(idStr)) {
@@ -49,6 +53,7 @@ public class WordNet {
                     this.hypernyms.addEdge(i, hypernymId);
                 }
             }
+            i++;
         }
         assert !hypernymsIn.hasNextLine();
         if (new DirectedCycle(this.hypernyms).hasCycle()) {
