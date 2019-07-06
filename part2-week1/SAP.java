@@ -3,6 +3,7 @@ import edu.princeton.cs.algs4.Digraph;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class SAP {
@@ -25,7 +26,6 @@ public class SAP {
 
     // length of shortest ancestral path between any vertex in v and any vertex in w; -1 if no such path
     public int length(Iterable<Integer> v, Iterable<Integer> w) {
-        List<Integer> sap = new ArrayList<>();
         BreadthFirstDirectedPaths vPaths = new BreadthFirstDirectedPaths(digraph, v);
         BreadthFirstDirectedPaths wPaths = new BreadthFirstDirectedPaths(digraph, w);
 
@@ -37,7 +37,7 @@ public class SAP {
         }
         int shortestCA = commonAncestors
                 .stream()
-                .min((Integer a, Integer b) -> vPaths.distTo(a) + wPaths.distTo(b))
+                .min(Comparator.comparingInt((Integer a) -> vPaths.distTo(a) + wPaths.distTo(a)))
                 .orElse(-1);
         if (shortestCA != -1) {
             return vPaths.distTo(shortestCA) + wPaths.distTo(shortestCA);
@@ -47,7 +47,6 @@ public class SAP {
 
     // a common ancestor that participates in shortest ancestral path; -1 if no such path
     public int ancestor(Iterable<Integer> v, Iterable<Integer> w) {
-        List<Integer> sap = new ArrayList<>();
         BreadthFirstDirectedPaths vPaths = new BreadthFirstDirectedPaths(digraph, v);
         BreadthFirstDirectedPaths wPaths = new BreadthFirstDirectedPaths(digraph, w);
 
@@ -59,7 +58,7 @@ public class SAP {
         }
         return commonAncestors
                 .stream()
-                .min((Integer a, Integer b) -> vPaths.distTo(a) + wPaths.distTo(b))
+                .min(Comparator.comparingInt((Integer a) -> vPaths.distTo(a) + wPaths.distTo(a)))
                 .orElse(-1);
     }
 
