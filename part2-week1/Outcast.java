@@ -14,13 +14,16 @@ public class Outcast {
         // To identify an outcast, compute the sum of the distances between each noun and every other one:
         // di = distance(xi, x1) + distance(xi, x2) + ... + distance(xi, xn)
         // and return a noun xt for which dt is maximum. Note that distance(xi, xi) = 0, so it will not contribute to the sum.
-        // TODO: this uses exactly 4 times the number of distance calls compared to the reference solution!
-        return Arrays.stream(nouns)
-                .max(Comparator.comparingInt(
-                        (String currentNoun) -> Arrays.stream(nouns)
-                                .mapToInt((String otherNoun) -> wordNet.distance(otherNoun, currentNoun))
-                                .sum()))
-                .get();
+        int maxDist = Integer.MIN_VALUE;
+        String outcast = nouns[0];
+        for (String noun : nouns) {
+            int dist = Arrays.stream(nouns).mapToInt((String otherNoun) -> wordNet.distance(otherNoun, noun)).sum();
+            if (dist > maxDist) {
+                outcast = noun;
+                maxDist = dist;
+            }
+        }
+        return outcast;
     }
 
     // see test client below
