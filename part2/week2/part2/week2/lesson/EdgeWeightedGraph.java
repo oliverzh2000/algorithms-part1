@@ -1,7 +1,6 @@
-package part2.week1.lesson;
+package part2.week2.lesson;
 
 import edu.princeton.cs.algs4.Bag;
-import edu.princeton.cs.algs4.In;
 
 import java.util.ArrayList;
 import java.util.List;

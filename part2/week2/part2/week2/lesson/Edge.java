@@ -1,4 +1,4 @@
-package part2.week1.lesson;
+package part2.week2.lesson;
 
 public class Edge implements Comparable<Edge> {
     private final int v; // one vertex
