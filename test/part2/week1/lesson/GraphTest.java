@@ -1,4 +1,4 @@
-package part2week1lesson;
+package part2.week1.lesson;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

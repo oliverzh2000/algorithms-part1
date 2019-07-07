@@ -1,19 +1,18 @@
-package part2week1lesson;
+package part2.week1.lesson;
 
-import edu.princeton.cs.algs4.Graph;
 import edu.princeton.cs.algs4.Stack;
 
-public class DepthFirstSearch {
-    private final Graph graph;
+public class DirectedDepthFirstSearch {
+    private final Digraph graph;
     private final int start;
     private boolean[] marked;
     private int[] edgeTo;
 
-    public DepthFirstSearch(Graph graph, int start) {
-        this.graph = graph;
+    public DirectedDepthFirstSearch(Digraph digraph, int start) {
+        this.graph = digraph;
         this.start = start;
-        this.marked = new boolean[graph.V()];
-        this.edgeTo = new int[graph.V()];
+        this.marked = new boolean[digraph.V()];
+        this.edgeTo = new int[digraph.V()];
 
         DFS(start);
     }

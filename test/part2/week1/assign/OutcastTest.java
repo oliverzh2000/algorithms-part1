@@ -1,4 +1,5 @@
 import edu.princeton.cs.algs4.In;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -14,9 +15,9 @@ class OutcastTest {
 
     @Test
     void outcast() {
-        assertEquals("table", outcast.outcast(new In("wordnet/outcast5.txt").readAllStrings()));
-        assertEquals("bed", outcast.outcast(new In("wordnet/outcast8.txt").readAllStrings()));
-        assertEquals("potato", outcast.outcast(new In("wordnet/outcast11.txt").readAllStrings()));
+        Assertions.assertEquals("table", outcast.outcast(new In("wordnet/outcast5.txt").readAllStrings()));
+        Assertions.assertEquals("bed", outcast.outcast(new In("wordnet/outcast8.txt").readAllStrings()));
+        Assertions.assertEquals("potato", outcast.outcast(new In("wordnet/outcast11.txt").readAllStrings()));
     }
 
     @Test

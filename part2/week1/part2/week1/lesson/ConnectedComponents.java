@@ -1,4 +1,4 @@
-package part2week1lesson;
+package part2.week1.lesson;
 
 public class ConnectedComponents {
     private final Graph graph;

@@ -1,3 +1,4 @@
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -34,17 +35,17 @@ class WordNetTest {
 
     @Test
     void isNoun() {
-        assertTrue(wordNet.isNoun("fluid_drive"));
-        assertFalse(wordNet.isNoun("fluid_drivet"));
+        Assertions.assertTrue(wordNet.isNoun("fluid_drive"));
+        Assertions.assertFalse(wordNet.isNoun("fluid_drivet"));
     }
 
     @Test
     void distance() {
-        assertEquals(23, wordNet.distance("white_marlin", "mileage"));
-        assertEquals(23, wordNet.distance("white_marlin", "mileage"));
-        assertEquals(33, wordNet.distance("Black_Plague", "black_marlin"));
-        assertEquals(27, wordNet.distance("American_water_spaniel", "histology"));
-        assertEquals(29, wordNet.distance("Brown_Swiss", "barrel_roll"));
+        Assertions.assertEquals(23, wordNet.distance("white_marlin", "mileage"));
+        Assertions.assertEquals(23, wordNet.distance("white_marlin", "mileage"));
+        Assertions.assertEquals(33, wordNet.distance("Black_Plague", "black_marlin"));
+        Assertions.assertEquals(27, wordNet.distance("American_water_spaniel", "histology"));
+        Assertions.assertEquals(29, wordNet.distance("Brown_Swiss", "barrel_roll"));
     }
 
     @Test
