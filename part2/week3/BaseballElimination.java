@@ -1,8 +1,35 @@
+import edu.princeton.cs.algs4.In;
+
+import java.util.HashMap;
+
 public class BaseballElimination {
+    private int n; // number of teams
+    private int[] w; // wins
+    private int[] l; // losses
+    private int[] r; // remaining
+    private int[][] g; // remaining games against each other team
+    private HashMap<String, Integer> teamIds;
 
     // create a baseball division from given filename in format specified below
     public BaseballElimination(String filename) {
-
+        In in = new In(filename);
+        n = in.readInt();
+        w = new int[n];
+        l = new int[n];
+        r = new int[n];
+        g = new int[n][n];
+        teamIds = new HashMap<>();
+        System.out.println(n);
+        for (int teamId = 0; teamId < n; teamId++) {
+            teamIds.put(in.readString(), teamId);
+            w[teamId] = in.readInt();
+            l[teamId] = in.readInt();
+            r[teamId] = in.readInt();
+            g[teamId] = new int[n];
+            for (int remainingGame = 0; remainingGame < n; remainingGame++) {
+                g[teamId][remainingGame] = in.readInt();
+            }
+        }
     }
 
     // number of teams
@@ -43,5 +70,9 @@ public class BaseballElimination {
     // subset R of teams that eliminates given team; null if not eliminated
     public Iterable<String> certificateOfElimination(String team) {
         return null;
+    }
+
+    public static void main(String[] args) {
+        BaseballElimination b = new BaseballElimination("baseball/teams4.txt");
     }
 }
