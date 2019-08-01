@@ -34,32 +34,32 @@ public class BaseballElimination {
 
     // number of teams
     public int numberOfTeams() {
-        return 0;
+        return n;
     }
 
     // all teams
     public Iterable<String> teams() {
-        return null;
+        return teamIds.keySet();
     }
 
     // number of wins for given team
     public int wins(String team) {
-        return 0;
+        return w[teamIds.get(team)];
     }
 
     // number of losses for given team
     public int losses(String team) {
-        return 0;
+        return l[teamIds.get(team)];
     }
 
     // number of remaining games for given team
     public int remaining(String team) {
-        return 0;
+        return r[teamIds.get(team)];
     }
 
     // number of remaining games between team1 and team2
     public int against(String team1, String team2) {
-        return 0;
+        return g[teamIds.get(team1)][teamIds.get(team2)];
     }
 
     // is given team eliminated?
@@ -74,5 +74,6 @@ public class BaseballElimination {
 
     public static void main(String[] args) {
         BaseballElimination b = new BaseballElimination("baseball/teams4.txt");
+        System.out.println(b);
     }
 }
