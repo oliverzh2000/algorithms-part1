@@ -107,6 +107,7 @@ public class BaseballElimination {
         }
         FordFulkerson fordFulkerson = new FordFulkerson(flowNet, source, target);
 
+        // TODO: instead of saving the total capacity, just check every vertex adjacent to source is full or not.
         if (fordFulkerson.value() < capacityFromSource) {
             eliminated[team] = true;
             gameVertex = 1;
