@@ -10,10 +10,10 @@ public class Trie<T> {
     }
 
     public void put(String key, T value) {
-        root = put(root, key, value, 0);
+        root = putNode(root, key, value, 0);
     }
 
-    private Node put(Node node, String key, T value, int charIndex) {
+    private Node putNode(Node node, String key, T value, int charIndex) {
         if (node == null) {
             node = new Node();
         }
@@ -21,7 +21,7 @@ public class Trie<T> {
             node.value = value;
         }
         char c = key.charAt(charIndex);
-        node.next[c] = put(node.next[c], key, value, charIndex + 1);
+        node.next[c] = putNode(node.next[c], key, value, charIndex + 1);
         return node;
     }
 
@@ -30,14 +30,14 @@ public class Trie<T> {
     }
 
     public T get(String key) {
-        Node retrieved = get(root, key, 0);
+        Node retrieved = getNode(root, key, 0);
         if (retrieved == null) {
             return null;
         }
         return (T) retrieved.value;
     }
 
-    private Node get(Node node, String key, int charIndex) {
+    private Node getNode(Node node, String key, int charIndex) {
         if (node == null) {
             return null;
         }
@@ -45,6 +45,6 @@ public class Trie<T> {
             return node;
         }
         char c = key.charAt(charIndex);
-        return get(node.next[c], key, charIndex + 1);
+        return getNode(node.next[c], key, charIndex + 1);
     }
 }
