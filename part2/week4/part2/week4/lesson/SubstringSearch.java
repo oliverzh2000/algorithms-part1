@@ -17,4 +17,23 @@ public class SubstringSearch {
         }
         return -1;
     }
+
+    public static int bruteForceExplicitBackup(String pattern, String text) {
+        int i, j;
+        int N = text.length();
+        int M = pattern.length();
+        for (i = 0, j = 0; i < N && j < M; i++) {
+            if (text.charAt(i) == pattern.charAt(j)) {
+                j++;
+            } else {
+                i -= j;
+                j = 0;
+            }
+        }
+        if (j == M) {
+            return i - M;
+        } else {
+            return N;
+        }
+    }
 }
