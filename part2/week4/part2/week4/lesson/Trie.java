@@ -47,4 +47,8 @@ public class Trie<T> {
         char c = key.charAt(charIndex);
         return getNode(node.next[c], key, charIndex + 1);
     }
+
+    public void delete(String key) {
+        getNode(root, key, 0).value = null;
+    }
 }
