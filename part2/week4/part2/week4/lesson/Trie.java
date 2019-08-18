@@ -49,6 +49,24 @@ public class Trie<T> {
     }
 
     public void delete(String key) {
-        getNode(root, key, 0).value = null;
+        Node retrieved = getNode(root, key, 0);
+        retrieved.value = null;
+        deleteNullLinks(retrieved);
+    }
+
+    private void deleteNullLinks(Node node) {
+        boolean isAllLinksNull = true;
+        for (int i = 0; i < R; i++) {
+            if (node.next[i] != null) {
+                isAllLinksNull = false;
+                break;
+            }
+        }
+        if (isAllLinksNull) {
+            for (int i = 0; i < R; i++) {
+                deleteNullLinks(node.next[i]);
+            }
+            node = null;
+        }
     }
 }
