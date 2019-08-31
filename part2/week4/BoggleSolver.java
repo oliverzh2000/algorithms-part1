@@ -1,10 +1,7 @@
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.StdOut;
-import edu.princeton.cs.algs4.TrieSET;
-import edu.princeton.cs.algs4.TrieST;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -13,17 +10,20 @@ import java.util.stream.Collectors;
 public class BoggleSolver {
     private static final int R = 26;
 
+    private final Trie prefixTrie;
     private final Set<String> dict;
     private boolean[][] marked; // for the dfs
 
     // Initializes the data structure using the given array of strings as the dictionary.
     // (You can assume each word in the dictionary contains only the uppercase letters A through Z.)
     public BoggleSolver(String[] dictionary) {
-        // TODO: optimize the dict to use a trie, to support fast prefix queries
+        prefixTrie = new Trie();
+        dict = new HashSet<>();
         for (int i = 0; i < dictionary.length; i++) {
-            dictionary[i] = dictionary[i].replace("QU", "Q");
+            String word = dictionary[i].replace("QU", "Q");
+            prefixTrie.put(word);
+            dict.add(word);
         }
-        dict = new HashSet<>(Arrays.asList(dictionary));
     }
 
     // Returns the set of all valid words in the given Boggle board, as an Iterable.
@@ -47,17 +47,19 @@ public class BoggleSolver {
         marked[row][col] = true;
         currentWord += board.getLetter(row, col);
         List<String> validWords = new ArrayList<>();
-        if (dict.contains(currentWord) && currentWord.length() >= 3) {
+        // TODO: Fix the ugly workaround for counting length of Qu
+        if (dict.contains(currentWord) && currentWord.replace("Q", "QU").length() >= 3) {
             validWords.add(currentWord);
         }
-
-        int[] directions = {-1, 0, 1};
-        for (int xDir : directions) {
-            for (int yDir : directions) {
-                int adjRow = row + yDir;
-                int adjCol = col + xDir;
-                if (isInRange(board, adjRow, adjCol) && !marked[adjRow][adjCol] && !(xDir == 0 && yDir == 0)) {
-                    validWords.addAll(dfs(board, currentWord, adjRow, adjCol));
+        if (prefixTrie.isAPrefix(currentWord)) {
+            int[] directions = {-1, 0, 1};
+            for (int xDir : directions) {
+                for (int yDir : directions) {
+                    int adjRow = row + yDir;
+                    int adjCol = col + xDir;
+                    if (isInRange(board, adjRow, adjCol) && !marked[adjRow][adjCol] && !(xDir == 0 && yDir == 0)) {
+                        validWords.addAll(dfs(board, currentWord, adjRow, adjCol));
+                    }
                 }
             }
         }
@@ -65,8 +67,8 @@ public class BoggleSolver {
         return validWords;
     }
 
-    private boolean isInRange(BoggleBoard board, int x, int y) {
-        return 0 <= x && x < board.cols() && 0 <= y && y < board.rows();
+    private boolean isInRange(BoggleBoard board, int row, int col) {
+        return 0 <= row && row < board.rows() && 0 <= col && col < board.cols();
     }
 
     // Returns the score of the given word if it is in the dictionary, zero otherwise.
@@ -83,10 +85,10 @@ public class BoggleSolver {
     }
 
     public static void main(String[] args) {
-        In in = new In("boggle/dictionary-algs4.txt");
+        In in = new In("boggle/dictionary-yawl.txt");
         String[] dictionary = in.readAllStrings();
         BoggleSolver solver = new BoggleSolver(dictionary);
-        BoggleBoard board = new BoggleBoard("boggle/board-q.txt");
+        BoggleBoard board = new BoggleBoard("boggle/board-qaimaqam.txt");
         int score = 0;
         int count = 0;
         for (String word : solver.getAllValidWords(board)) {
