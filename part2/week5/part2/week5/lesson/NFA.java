@@ -3,6 +3,7 @@ package part2.week5.lesson;
 import edu.princeton.cs.algs4.Bag;
 import edu.princeton.cs.algs4.Digraph;
 import edu.princeton.cs.algs4.DirectedDFS;
+import edu.princeton.cs.algs4.Stack;
 
 public class NFA {
     private final char[] re;
@@ -51,6 +52,36 @@ public class NFA {
     }
 
     public Digraph epsilonTransitionsGraph() {
+        Digraph G = new Digraph(M + 1); // One extra accept state.
+        Stack<Integer> opIndices = new Stack<>();
 
+        for (int i = 0; i < M; i++) {
+            // leftParenIndex also refers to the current char if we're not inside a paren.
+            int leftParenIndex = i;
+            if (re[i] == '(' || re[i] == '|') {
+                opIndices.push(i);
+            } else if (re[i] == ')') {
+                int prevOpIndex = opIndices.pop();
+                if (re[prevOpIndex] == '|') {
+                    leftParenIndex = opIndices.pop();
+                    G.addEdge(leftParenIndex, prevOpIndex + 1);
+                    G.addEdge(prevOpIndex, i);
+                } else {
+                    leftParenIndex = prevOpIndex;
+                }
+            }
+
+            // Closure needs one char look-ahead
+            if (i < M - 1 && re[i + 1] == '*') {
+                G.addEdge(leftParenIndex, i + 1);
+                G.addEdge(i + 1, leftParenIndex);
+            }
+
+            // Metasymbols
+            if (re[i] == '(' || re[i] == '*' || re[i] == ')') {
+                G.addEdge(i, i + 1);
+            }
+        }
+        return G;
     }
 }
