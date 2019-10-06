@@ -7,6 +7,72 @@ import edu.princeton.cs.algs4.MinPQ;
 public class HuffmanCoding {
     private static final int R = 256; // Radix
 
+    public static void compress() {
+        String string = BinaryStdIn.readString();
+        char[] input = string.toCharArray();
+
+        // Tabulate frequency counts.
+        int[] freq = new int[R];
+        for (int i = 0; i < input.length; i++) {
+            freq[input[i]]++;
+        }
+
+        // Build Huffman code trie.
+        Node root = buildTrie(freq);
+
+        // Build code table (recursive).
+        String[] codeTable = new String[R];
+        buildCode(codeTable, root, "");
+
+        writeTrie(root);
+        BinaryStdOut.write(input.length);
+
+        // Use Huffman code to encode input.
+        for (int i = 0; i < input.length; i++) {
+            String code = codeTable[input[i]];
+            for (int j = 0; j < code.length(); j++)
+                if (code.charAt(j) == '1') {
+                    BinaryStdOut.write(true);
+                } else {
+                    BinaryStdOut.write(false);
+                }
+        }
+        BinaryStdOut.close();
+    }
+
+    private static String[] buildCode(Node root) { // Make a lookup table from trie.
+        String[] st = new String[R];
+        buildCode(st, root, "");
+        return st;
+    }
+
+    private static void buildCode(String[] st, Node x, String s) { // Make a lookup table from trie (recursive).
+        if (x.isLeaf()) {
+            st[x.ch] = s;
+            return;
+        }
+        buildCode(st, x.left, s + '0');
+        buildCode(st, x.right, s + '1');
+    }
+
+    public void expand() {
+        Node root = readTrie();
+        int N = BinaryStdIn.readInt();
+
+        for (int i = 0; i < N; i++) {
+            Node currentNode = root;
+            while (!currentNode.isLeaf()) {
+                if (!BinaryStdIn.readBoolean()) {
+                    currentNode = currentNode.left;
+                } else {
+                    currentNode = currentNode.right;
+                }
+            }
+            BinaryStdOut.write(currentNode.ch, 8);
+        }
+        BinaryStdOut.close();
+    }
+
     private static Node buildTrie(int[] freq) {
         // Start with one Node corresponding to each char i (with weight freq[i]) on a MinPQ.
         // Repeat until MinPQ has only a single trie left:
