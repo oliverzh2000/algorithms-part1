@@ -5,22 +5,29 @@ import edu.princeton.cs.algs4.BinaryStdOut;
 import edu.princeton.cs.algs4.MinPQ;
 
 public class HuffmanCoding {
-    public void expand() {
-        Node root = readTrie();
-        int N = BinaryStdIn.readInt();
+    private static final int R = 256; // Radix
 
-        for (int i = 0; i < N; i++) {
-            Node currentNode = root;
-            while (!currentNode.isLeaf()) {
-                if (!BinaryStdIn.readBoolean()) {
-                    currentNode = currentNode.left;
-                } else {
-                    currentNode = currentNode.right;
-                }
+    private static Node buildTrie(int[] freq) {
+        // Start with one Node corresponding to each char i (with weight freq[i]) on a MinPQ.
+        // Repeat until MinPQ has only a single trie left:
+        // - Select the two tries with min total freq.
+        // - Merge these two tries and insert back unto minPQ.
+
+        MinPQ<Node> huffmanForrest = new MinPQ<>();
+        // Initialize PQ with singleton tries
+        for (char i = 0; i < R; i++) {
+            if (freq[i] > 0) {
+                huffmanForrest.insert(new Node(i, freq[i], null, null));
             }
-            BinaryStdOut.write(currentNode.ch, 8);
         }
-        BinaryStdOut.close();
+
+        // Continue merging the two least-freq tries until only one left.
+        while (!huffmanForrest.isEmpty()) {
+            Node left = huffmanForrest.delMin();
+            Node right = huffmanForrest.delMin();
+            huffmanForrest.insert(new Node('\0', left.freq + right.freq, left, right));
+        }
+        return huffmanForrest.delMin();
     }
 
     private static void writeTrie(Node x) {
